@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudentInsight Exchange — The Peer Wisdom Platform</title>
+
+  <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --bg-white: #FFFFFF;
+      --bg-light: #F8FAFC;
+      --navy-900: #0F172A;
+      --navy-800: #1E293B;
+      --navy-700: #334155;
+      --navy-600: #475569;
+      --navy-100: #F1F5F9;
+
+      --lavender-100: #EDE9FE;
+      --lavender-200: #DDD6FE;
+      --lavender-500: #8B5CF6;
+      --lavender-600: #7C3AED;
+
+      --light-blue-100: #E0F2FE;
+      --light-blue-500: #0EA5E9;
+      --light-blue-600: #0284C7;
+
+      --pink-100: #FCE7F3;
+      --pink-500: #EC4899;
+      --pink-accent: #F43F5E;
+
+      --card-border: #E2E8F0;
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+
+      --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, h5, h6, .brand-font { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    body {
+      background-color: var(--bg-white);
+      color: var(--navy-900);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Safety Banner Bar */
+    .safety-banner {
+      background: var(--navy-900);
+      color: #94A3B8;
+      font-size: 0.78rem;
+      padding: 0.4rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .safety-banner span { display: flex; align-items: center; gap: 0.4rem; }
+    .safety-banner a { color: var(--lavender-200); text-decoration: underline; cursor: pointer; }
+
+    /* Header Navigation */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 0.85rem 1.5rem;
+    }
+
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--navy-900);
+      font-weight: 800;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .logo-badge {
+      background: linear-gradient(135deg, var(--lavender-500), var(--light-blue-600));
+      color: white;
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);
+    }
+
+    /* MVP Nav Tabs */
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--navy-100);
+      padding: 0.3rem;
+      border-radius: var(--radius-full);
+    }
+
+    .nav-tab {
+      padding: 0.5rem 1.1rem;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--navy-700);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .nav-tab:hover, .nav-tab.active {
+      background: var(--bg-white);
+      color: var(--lavender-600);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Profile Pill (Minimal Privacy-First) */
+    .profile-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.8rem;
+      background: var(--bg-light);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy-800);
+      cursor: pointer;
+    }
+
+    .profile-avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--lavender-500);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      font-weight: 600;
+      font-size: 0.88rem;
+      border-radius: var(--radius-full);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--lavender-600), var(--light-blue-600));
+      color: white;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--card-border);
+      color: var(--navy-800);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--lavender-500);
+      color: var(--lavender-600);
+      background: white;
+    }
+
+    /* Main Container Views */
+    .page-view {
+      display: none;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .page-view.active {
+      display: block;
+    }
+
+    /* HERO & JOURNEY MAP (Home Page) */
+    .hero-box {
+      text-align: center;
+      padding: 3rem 1rem 2.5rem;
+      background: radial-gradient(circle at 50% 0%, rgba(237, 233, 254, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
+    }
+
+    .hero-box h1 {
+      font-size: 2.75rem;
+      line-height: 1.18;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .hero-box h1 span {
+      background: linear-gradient(135deg, var(--lavender-600), var(--light-blue-600));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-box p {
+      font-size: 1.1rem;
+      color: var(--navy-700);
+      max-width: 650px;
+      margin: 0 auto 2rem;
+    }
+
+    /* Search Bar */
+    .hero-search-wrap {
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-search-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--bg-white);
+      border: 2px solid var(--card-border);
+      border-radius: var(--radius-full);
+      padding: 0.5rem 0.6rem 0.5rem 1.25rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .hero-search-bar input {
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 0.95rem;
+      color: var(--navy-900);
+    }
+
+    .search-suggestions {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 0.85rem;
+      font-size: 0.8rem;
+      color: var(--navy-600);
+    }
+
+    .suggestion-chip {
+      background: var(--navy-100);
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .suggestion-chip:hover {
+      background: var(--lavender-100);
+      color: var(--lavender-600);
+    }
+
+    /* Categories Grid */
+    .categories-section {
+      margin-bottom: 3.5rem;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title h2 { font-size: 1.6rem; color: var(--navy-900); }
+    .section-title p { font-size: 0.9rem; color: var(--navy-600); }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .category-card {
+      background: var(--bg-white);
+      border: 1.5px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .category-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--lavender-500);
+      box-shadow: var(--shadow-md);
+    }
+
+    .category-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .category-card h4 { font-size: 1rem; color: var(--navy-900); margin-bottom: 0.25rem; }
+    .category-card p { font-size: 0.75rem; color: var(--navy-600); }
+
+    /* Student Journey Map Section */
+    .journey-section {
+      background: var(--navy-900);
+      color: white;
+      border-radius: var(--radius-lg);
+      padding: 3rem 2rem;
+      margin-bottom: 3.5rem;
+      text-align: center;
+    }
+
+    .journey-section h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .journey-section p { color: #94A3B8; font-size: 0.95rem; margin-bottom: 2.5rem; }
+
+    .journey-stepper {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1rem;
+    }
+
+    .journey-step {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 0.75rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .journey-step:hover {
+      background: rgba(139, 92, 246, 0.25);
+      border-color: var(--lavender-500);
+      transform: translateY(-2px);
+    }
+
+    .journey-step-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--lavender-200);
+      margin-bottom: 0.5rem;
+    }
+
+    .journey-step h4 { font-size: 0.95rem; margin-bottom: 0.3rem; }
+
+    /* "I Wish I Knew" Feature Box */
+    .wish-banner-box {
+      background: linear-gradient(135deg, var(--lavender-100), var(--light-blue-100));
+      border: 2px dashed var(--lavender-500);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .wish-banner-content h3 { font-size: 1.4rem; color: var(--navy-900); margin-bottom: 0.5rem; }
+    .wish-banner-content p { color: var(--navy-700); font-size: 0.95rem; }
+
+    /* Feed Layout */
+    .feed-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 2rem;
+    }
+
+    .feed-sidebar {
+      background: var(--bg-white);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      height: fit-content;
+      position: sticky;
+      top: 5.5rem;
+    }
+
+    .sidebar-block { margin-bottom: 1.5rem; }
+    .sidebar-block h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--navy-600); margin-bottom: 0.75rem; }
+
+    .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+    .sidebar-list li a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius-sm);
+      color: var(--navy-700);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .sidebar-list li a:hover, .sidebar-list li a.active {
+      background: var(--lavender-100);
+      color: var(--lavender-600);
+    }
+
+    /* Cards Grid */
+    .post-card-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .exp-post-card {
+      background: var(--bg-white);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .exp-post-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: #CBD5E1;
+    }
+
+    .post-meta-tags {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .meta-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .tag-elem { background: var(--light-blue-100); color: var(--light-blue-600); }
+    .tag-high { background: var(--lavender-100); color: var(--lavender-600); }
+    .tag-uni { background: var(--pink-100); color: var(--pink-accent); }
+    .tag-cat { background: var(--navy-100); color: var(--navy-700); }
+
+    .post-card-title { font-size: 1.2rem; font-weight: 700; color: var(--navy-900); margin-bottom: 0.5rem; }
+    .post-card-excerpt { font-size: 0.9rem; color: var(--navy-700); margin-bottom: 1rem; line-height: 1.5; }
+
+    .post-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--navy-100);
+      font-size: 0.8rem;
+      color: var(--navy-600);
+    }
+
+    .post-author { display: flex; align-items: center; gap: 0.5rem; font-weight: 600; color: var(--navy-900); }
+    .post-author-avatar { width: 24px; height: 24px; border-radius: 50%; background: var(--lavender-500); color: white; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; }
+
+    /* Single Experience Reader Page */
+    .reader-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--bg-white);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .reader-block {
+      background: var(--bg-light);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      border-left: 4px solid var(--lavender-500);
+    }
+
+    .reader-block.wish-block { border-left-color: var(--light-blue-500); }
+    .reader-block.lesson-block { border-left-color: var(--pink-accent); }
+
+    .reader-block h5 { font-size: 0.82rem; text-transform: uppercase; color: var(--navy-600); margin-bottom: 0.4rem; }
+    .reader-block p { font-size: 0.98rem; color: var(--navy-800); line-height: 1.6; }
+
+    /* Share Form Styles */
+    .share-form-card {
+      max-width: 720px;
+      margin: 0 auto;
+      background: var(--bg-white);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--navy-800); }
+    .form-control { width: 100%; padding: 0.75rem 1rem; border: 1.5px solid var(--card-border); border-radius: var(--radius-sm); font-size: 0.92rem; outline: none; }
+    .form-control:focus { border-color: var(--lavender-500); box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15); }
+    textarea.form-control { min-height: 100px; resize: vertical; }
+
+    .safety-notice-box {
+      background: var(--pink-100);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+      font-size: 0.82rem;
+      color: var(--navy-800);
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    /* Modal Overlay */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 1000;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden; transition: var(--transition);
+    }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal-card { background: white; width: 90%; max-width: 580px; border-radius: var(--radius-lg); padding: 2.25rem; position: relative; }
+
+    footer {
+      background: var(--bg-white);
+      border-top: 1px solid var(--card-border);
+      padding: 3rem 1.5rem 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .footer-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--navy-600);
+    }
+
+    @media (max-width: 900px) {
+      .feed-layout { grid-template-columns: 1fr; }
+      .journey-stepper { grid-template-columns: repeat(2, 1fr); }
+      .wish-banner-box { flex-direction: column; text-align: center; }
+      .nav-tabs { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Safety Banner Bar -->
+  <div class="safety-banner">
+    <span>
+      <i data-lucide="shield-check" style="width: 14px; height: 14px; color: var(--lavender-200);"></i>
+      Privacy & Safety First: No personal addresses, phone numbers, or private contact details allowed.
+    </span>
+    <a id="btn-open-safety-modal">Read Safety Guidelines</a>
+  </div>
+
+  <!-- Header Navigation -->
+  <header>
+    <div class="nav-container">
+      <a class="logo" onclick="switchPage('home')">
+        <div class="logo-badge">SE</div>
+        <span>StudentInsight</span>
+      </a>
+
+      <!-- MVP 6-Page Navigation -->
+      <nav class="nav-tabs">
+        <button class="nav-tab active" data-page="home" onclick="switchPage('home')">Home</button>
+        <button class="nav-tab" data-page="experiences" onclick="switchPage('experiences')">Experiences</button>
+        <button class="nav-tab" data-page="questions" onclick="switchPage('questions')">Q&A</button>
+        <button class="nav-tab" data-page="wish" onclick="switchPage('wish')">I Wish I Knew</button>
+        <button class="nav-tab" data-page="about" onclick="switchPage('about')">About</button>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn btn-primary" onclick="switchPage('share')">
+          <i data-lucide="plus" style="width: 16px; height: 16px;"></i>
+          Share Story
+        </button>
+
+        <div class="profile-pill" title="Privacy-Safe Student Profile">
+          <div class="profile-avatar">S</div>
+          <span>Sara (CS)</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- PAGE 1: HOME PAGE -->
+  <div class="page-view active" id="page-home">
+    <div class="hero-box">
+      <h1>Learn from students who've <span>been there.</span></h1>
+      <p>A safe, peer-to-peer network connecting Elementary, High School, and University students through real experiences and honest advice.</p>
+
+      <!-- Intelligent Search Bar -->
+      <div class="hero-search-wrap">
+        <div class="hero-search-bar">
+          <i data-lucide="search" style="width: 18px; height: 18px; color: var(--navy-600);"></i>
+          <input type="text" id="home-search-input" placeholder="Search e.g. 'Computer science university experience' or 'Grade 12 exams'">
+          <button class="btn btn-primary" onclick="handleHomeSearch()">Search</button>
+        </div>
+        <div class="search-suggestions">
+          <span>Try searching:</span>
+          <span class="suggestion-chip" onclick="quickSearch('Computer Science')">Computer Science</span>
+          <span class="suggestion-chip" onclick="quickSearch('Grade 12 exams')">Grade 12 Prep</span>
+          <span class="suggestion-chip" onclick="quickSearch('First year')">First Year Dorms</span>
+          <span class="suggestion-chip" onclick="quickSearch('Study techniques')">Study Techniques</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+      <div class="section-title">
+        <div>
+          <h2>Explore by Category</h2>
+          <p>Find real peer experiences grouped by what matters to you most</p>
+        </div>
+      </div>
+
+      <div class="category-grid">
+        <div class="category-card" onclick="filterCategory('Academics')">
+          <div class="category-icon">📚</div>
+          <h4>Academics</h4>
+          <p>Study tips, exams, time management</p>
+        </div>
+        <div class="category-card" onclick="filterCategory('University')">
+          <div class="category-icon">🎓</div>
+          <h4>University</h4>
+          <p>Choosing majors, campus life, first year</p>
+        </div>
+        <div class="category-card" onclick="filterCategory('Career')">
+          <div class="category-icon">💼</div>
+          <h4>Career</h4>
+          <p>Internships, skills, future path</p>
+        </div>
+        <div class="category-card" onclick="filterCategory('Opportunities')">
+          <div class="category-icon">💰</div>
+          <h4>Opportunities</h4>
+          <p>Scholarships, competitions, programs</p>
+        </div>
+        <div class="category-card" onclick="filterCategory('Student Life')">
+          <div class="category-icon">🧠</div>
+          <h4>Student Life</h4>
+          <p>Confidence, friendship, balancing life</p>
+        </div>
+        <div class="category-card" onclick="filterCategory('Advice')">
+          <div class="category-icon">💡</div>
+          <h4>Advice</h4>
+          <p>Mistakes made, lessons learned</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Student Journey Map -->
+    <section class="journey-section">
+      <h2>Navigate Your Student Journey</h2>
+      <p>Click your current or upcoming stage to see what to expect and advice from older students</p>
+
+      <div class="journey-stepper">
+        <div class="journey-step" onclick="switchPage('experiences')">
+          <div class="journey-step-badge">Stage 1</div>
+          <h4>Elementary</h4>
+          <p style="font-size:0.75rem; color:#CBD5E1;">Grades 1–6</p>
+        </div>
+        <div class="journey-step" onclick="switchPage('experiences')">
+          <div class="journey-step-badge">Stage 2</div>
+          <h4>High School</h4>
+          <p style="font-size:0.75rem; color:#CBD5E1;">Grades 7–10</p>
+        </div>
+        <div class="journey-step" onclick="switchPage('experiences')">
+          <div class="journey-step-badge">Stage 3</div>
+          <h4>Grade 11</h4>
+          <p style="font-size:0.75rem; color:#CBD5E1;">Stream Selection</p>
+        </div>
+        <div class="journey-step" onclick="switchPage('experiences')">
+          <div class="journey-step-badge">Stage 4</div>
+          <h4>Grade 12</h4>
+          <p style="font-size:0.75rem; color:#CBD5E1;">Exam & Uni Prep</p>
+        </div>
+        <div class="journey-step" onclick="switchPage('experiences')">
+          <div class="journey-step-badge">Stage 5</div>
+          <h4>University</h4>
+          <p style="font-size:0.75rem; color:#CBD5E1;">Campus Life & Majors</p>
+        </div>
+        <div class="journey-step" onclick="switchPage('experiences')">
+          <div class="journey-step-badge">Stage 6</div>
+          <h4>Career</h4>
+          <p style="font-size:0.75rem; color:#CBD5E1;">Graduation & Internships</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- "I Wish I Knew" Feature Box -->
+    <div class="wish-banner-box">
+      <div class="wish-banner-content">
+        <h3>💭 Feature Spotlight: "I Wish I Knew"</h3>
+        <p>Honest answers from older students to one question: <em>"What do you wish you knew one year ago?"</em></p>
+      </div>
+      <button class="btn btn-primary" onclick="switchPage('wish')">Explore Insights</button>
+    </div>
+  </div>
+
+  <!-- PAGE 2: EXPERIENCES LIBRARY (BROWSE STORIES) -->
+  <div class="page-view" id="page-experiences">
+    <div class="section-title" style="margin-bottom:1.5rem;">
+      <div>
+        <h2>Experience Library</h2>
+        <p>Browse authentic stories shared by students across elementary, high school, and university levels.</p>
+      </div>
+    </div>
+
+    <div class="feed-layout">
+      <!-- Sidebar Filters -->
+      <aside class="feed-sidebar">
+        <div class="sidebar-block">
+          <h4>Student Level</h4>
+          <ul class="sidebar-list">
+            <li><a class="active level-filter-btn" data-level="all" onclick="setExperienceLevel('all')">All Levels</a></li>
+            <li><a class="level-filter-btn" data-level="elementary" onclick="setExperienceLevel('elementary')">🧒 Elementary</a></li>
+            <li><a class="level-filter-btn" data-level="highschool" onclick="setExperienceLevel('highschool')">🧑‍🎓 High School</a></li>
+            <li><a class="level-filter-btn" data-level="university" onclick="setExperienceLevel('university')">🎓 University</a></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-block">
+          <h4>Category</h4>
+          <ul class="sidebar-list">
+            <li><a class="active cat-filter-btn" onclick="setExperienceCategory('all')">All Categories</a></li>
+            <li><a class="cat-filter-btn" onclick="setExperienceCategory('Academics')">📚 Academics</a></li>
+            <li><a class="cat-filter-btn" onclick="setExperienceCategory('University')">🎓 University</a></li>
+            <li><a class="cat-filter-btn" onclick="setExperienceCategory('Career')">💼 Career</a></li>
+            <li><a class="cat-filter-btn" onclick="setExperienceCategory('Opportunities')">💰 Opportunities</a></li>
+            <li><a class="cat-filter-btn" onclick="setExperienceCategory('Student Life')">🧠 Student Life</a></li>
+            <li><a class="cat-filter-btn" onclick="setExperienceCategory('Advice')">💡 Advice</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Main Feed List -->
+      <main class="post-card-grid" id="experiences-grid-container"></main>
+    </div>
+  </div>
+
+  <!-- PAGE 3: SINGLE EXPERIENCE READER PAGE -->
+  <div class="page-view" id="page-experience">
+    <div style="margin-bottom: 1.5rem;">
+      <button class="btn btn-outline" onclick="switchPage('experiences')">
+        <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i>
+        Back to Experiences
+      </button>
+    </div>
+
+    <article class="reader-container" id="reader-content-box"></article>
+  </div>
+
+  <!-- PAGE 4: QUESTIONS & ANSWERS -->
+  <div class="page-view" id="page-questions">
+    <div class="section-title" style="margin-bottom:1.5rem;">
+      <div>
+        <h2>Questions & Answers 💬</h2>
+        <p>Ask younger students' burning questions or answer as an experienced older peer.</p>
+      </div>
+      <button class="btn btn-primary" onclick="alert('Feature active: Submitting questions will be moderated for safety.')">Ask a Question</button>
+    </div>
+
+    <div class="post-card-grid" id="questions-list-container"></div>
+  </div>
+
+  <!-- PAGE: I WISH I KNEW FEATURE PAGE -->
+  <div class="page-view" id="page-wish">
+    <div class="section-title" style="margin-bottom:1.5rem;">
+      <div>
+        <h2>💭 "I Wish I Knew" Wall</h2>
+        <p>Short, powerful nuggets of wisdom from students looking back on their journey.</p>
+      </div>
+    </div>
+
+    <div class="post-card-grid" id="wish-list-container"></div>
+  </div>
+
+  <!-- PAGE 5: SHARE AN EXPERIENCE -->
+  <div class="page-view" id="page-share">
+    <div class="share-form-card">
+      <h2 style="font-size: 1.6rem; color: var(--navy-900); margin-bottom: 0.5rem;">Share Your Experience</h2>
+      <p style="color: var(--navy-600); font-size: 0.9rem; margin-bottom: 1.5rem;">
+        Your story will help students facing the exact same step you took a year ago.
+      </p>
+
+      <div class="safety-notice-box">
+        <i data-lucide="shield-alert" style="width: 18px; height: 18px; color: var(--pink-accent); flex-shrink: 0;"></i>
+        <div>
+          <strong>Safety Policy Reminder:</strong> Do NOT include your real home address, phone number, social media handles, or full real name. Posts are reviewed before appearing publicly.
+        </div>
+      </div>
+
+      <form id="share-experience-form">
+        <div class="form-group">
+          <label for="post-title">Experience Title</label>
+          <input type="text" id="post-title" class="form-control" placeholder="e.g. What I wish I knew before starting Grade 12" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label for="post-level">I am currently a:</label>
+            <select id="post-level" class="form-control" required>
+              <option value="elementary">Elementary Student</option>
+              <option value="highschool">High School Student</option>
+              <option value="university">University Student</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="post-category">Category</label>
+            <select id="post-category" class="form-control" required>
+              <option value="Academics">Academics</option>
+              <option value="University">University</option>
+              <option value="Career">Career</option>
+              <option value="Opportunities">Opportunities</option>
+              <option value="Student Life">Student Life</option>
+              <option value="Advice">Advice</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="post-exp-text">My Experience (What happened?)</label>
+          <textarea id="post-exp-text" class="form-control" placeholder="Describe your experience during this stage..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="post-wish-text">What I Wish I Knew One Year Ago</label>
+          <textarea id="post-wish-text" class="form-control" placeholder="What insight would have made this easier for you?"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="post-advice-text">My Advice to Younger Students</label>
+          <textarea id="post-advice-text" class="form-control" placeholder="What actionable steps should younger students take?"></textarea>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label for="post-author-alias">Name or Alias</label>
+            <input type="text" id="post-author-alias" class="form-control" placeholder="e.g. Sara M. or Anonymous" required>
+          </div>
+          <div class="form-group">
+            <label for="post-author-field">Grade / Field of Study</label>
+            <input type="text" id="post-author-field" class="form-control" placeholder="e.g. Computer Science @ AA Uni" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem; padding: 0.85rem;">
+          Submit Experience for Review
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- PAGE 6: ABOUT MISSION PAGE -->
+  <div class="page-view" id="page-about">
+    <div style="max-width: 800px; margin: 0 auto; background: white; padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid var(--card-border);">
+      <h2 style="font-size: 2rem; color: var(--navy-900); margin-bottom: 1rem;">The Place Where Students Learn From Students</h2>
+      <p style="font-size: 1.05rem; color: var(--navy-700); margin-bottom: 1.5rem;">
+        When an 8th grade student feels nervous about high school, or an 11th grader worries about university entrance exams, reading a generic textbook article written by adults isn't enough.
+      </p>
+      <p style="font-size: 1.05rem; color: var(--navy-700); margin-bottom: 2rem;">
+        <strong>StudentInsight Exchange</strong> was created to forge an authentic emotional connection: hearing directly from someone who walked in your exact shoes just one or two years ago.
+      </p>
+
+      <div style="background: var(--bg-light); border-radius: var(--radius-md); padding: 1.5rem; border-left: 4px solid var(--lavender-500); margin-bottom: 2rem;">
+        <h4 style="color: var(--navy-900); margin-bottom: 0.5rem;">Our Long-Term Vision 🇪🇹</h4>
+        <p style="font-size: 0.95rem; color: var(--navy-700);">
+          Starting in Ethiopia and expanding globally, our goal is to build an irreplaceable database of real student experiences so every generation can step forward with confidence.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Safety Guidelines Modal -->
+  <div class="modal-overlay" id="safety-modal">
+    <div class="modal-card">
+      <h3 style="font-size: 1.4rem; color: var(--navy-900); margin-bottom: 1rem;">🛡️ Child Safety & Privacy Rules</h3>
+      <ul style="padding-left: 1.25rem; font-size: 0.92rem; color: var(--navy-700); display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem;">
+        <li><strong>No Contact Info:</strong> Sharing phone numbers, home addresses, or private messaging handles is strictly forbidden.</li>
+        <li><strong>No External Migration:</strong> Asking minor students to move conversations off-platform is not allowed.</li>
+        <li><strong>Minimal Profiles:</strong> Profiles display only first name/alias, level, and field of study to prevent tracking.</li>
+        <li><strong>Proactive Moderation:</strong> All submissions are filtered for safety before publication.</li>
+      </ul>
+      <button class="btn btn-primary" style="width: 100%;" id="btn-close-safety-modal">I Understand</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div>
+        <strong>StudentInsight Exchange</strong> — Built for student growth & safety.
+      </div>
+      <div>
+        Modern • Youthful • Clean • Academic
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const experiencesData = [
+      {
+        id: 1,
+        title: "What I wish I knew before starting Grade 12 exams",
+        level: "highschool",
+        category: "Academics",
+        experience: "Grade 12 felt like a whirlwind of university applications and entrance exam prep. I spent the first two months stressed because I didn't organize my revision calendar early.",
+        wishIKnew: "I wish I knew that university admissions care much more about consistent study habits and clear personal statements than cramming at 2 AM.",
+        advice: "Build a single master revision calendar in August. Solve 15 practice exam questions every morning before class.",
+        author: "Sara M.",
+        field: "Computer Science @ AA Uni",
+        likes: 38
+      },
+      {
+        id: 2,
+        title: "My first semester in Computer Science at university",
+        level: "university",
+        category: "University",
+        experience: "Moving into campus life and managing my own schedule for the first time was both exciting and challenging. Nobody reminded me to study, and midterms arrived fast.",
+        wishIKnew: "I wish I knew how essential professor office hours were. They are super helpful when you ask questions early in the semester.",
+        advice: "Treat university classes like a 9-to-5 job. Work on campus between lectures instead of going back to your dorm room.",
+        author: "Jordan V.",
+        field: "Uni Sophomore",
+        likes: 54
+      },
+      {
+        id: 3,
+        title: "How I became better at studying in 8th grade",
+        level: "elementary",
+        category: "Academics",
+        experience: "I used to think studying meant reading my textbook over and over until my eyes got tired. I still made silly mistakes on science tests.",
+        wishIKnew: "I wish I knew that studying for 20 active minutes beats 2 hours of distracted textbook reading.",
+        advice: "Try active recall! Use flashcards or explain the lesson out loud to a friend or parent without looking at your notes.",
+        author: "David K.",
+        field: "10th Grader",
+        likes: 27
+      }
+    ];
+
+    const questionsData = [
+      {
+        id: 101,
+        title: "What is university campus life actually like on your first week?",
+        askedBy: "Abebe (Grade 11)",
+        answers: [
+          { author: "Sara (CS Major)", text: "It's exciting but huge! The first week is mostly orientation, finding your lecture halls, and meeting classmates. Don't worry about getting lost—everyone is new!" }
+        ]
+      },
+      {
+        id: 102,
+        title: "How did you decide between studying Engineering or Computer Science?",
+        askedBy: "Hana (Grade 12)",
+        answers: [
+          { author: "Jordan (Sophomore)", text: "I took one free online intro coding class during summer break. Doing a small hands-on project made me realize I preferred software building over physical mechanics." }
+        ]
+      }
+    ];
+
+    let currentSelectedLevel = 'all';
+    let currentSelectedCategory = 'all';
+
+    function switchPage(pageId) {
+      document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+
+      const targetPage = document.getElementById(`page-${pageId}`);
+      if (targetPage) targetPage.classList.add('active');
+
+      const targetTab = document.querySelector(`.nav-tab[data-page="${pageId}"]`);
+      if (targetTab) targetTab.classList.add('active');
+
+      window.scrollTo(0, 0);
+
+      if (pageId === 'experiences') renderExperiences();
+      if (pageId === 'questions') renderQuestions();
+      if (pageId === 'wish') renderWishes();
+    }
+
+    function renderExperiences() {
+      const container = document.getElementById('experiences-grid-container');
+      const filtered = experiencesData.filter(item => {
+        if (currentSelectedLevel !== 'all' && item.level !== currentSelectedLevel) return false;
+        if (currentSelectedCategory !== 'all' && item.category !== currentSelectedCategory) return false;
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:3rem; background:white; border-radius:12px; border:1px solid #e2e8f0;">No experiences match these filters yet. Be the first to share one!</div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(item => `
+        <article class="exp-post-card" onclick="readFullExperience(${item.id})">
+          <div class="post-meta-tags">
+            <span class="meta-tag tag-${item.level === 'elementary' ? 'elem' : item.level === 'highschool' ? 'high' : 'uni'}">
+              ${item.level}
+            </span>
+            <span class="meta-tag tag-cat">${item.category}</span>
+          </div>
+          <h3 class="post-card-title">${item.title}</h3>
+          <p class="post-card-excerpt">${item.experience}</p>
+          <div class="post-card-footer">
+            <div class="post-author">
+              <div class="post-author-avatar">${item.author.charAt(0)}</div>
+              <span>${item.author} (${item.field})</span>
+            </div>
+            <span>👍 ${item.likes} helpful</span>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function readFullExperience(id) {
+      const item = experiencesData.find(e => e.id === id);
+      if (!item) return;
+
+      const container = document.getElementById('reader-content-box');
+      container.innerHTML = `
+        <div class="post-meta-tags" style="margin-bottom:1rem;">
+          <span class="meta-tag tag-${item.level === 'elementary' ? 'elem' : item.level === 'highschool' ? 'high' : 'uni'}">${item.level}</span>
+          <span class="meta-tag tag-cat">${item.category}</span>
+        </div>
+        <h1 style="font-size:2rem; color:var(--navy-900); margin-bottom:1rem;">${item.title}</h1>
+
+        <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:2rem; padding-bottom:1rem; border-bottom:1px solid #e2e8f0;">
+          <div class="post-author-avatar" style="width:36px; height:36px; font-size:0.9rem;">${item.author.charAt(0)}</div>
+          <div>
+            <strong style="display:block; font-size:0.95rem; color:var(--navy-900);">${item.author}</strong>
+            <span style="font-size:0.8rem; color:var(--navy-600);">${item.field}</span>
+          </div>
+        </div>
+
+        <div class="reader-block">
+          <h5><i data-lucide="compass"></i> The Experience</h5>
+          <p>${item.experience}</p>
+        </div>
+
+        ${item.wishIKnew ? `
+          <div class="reader-block wish-block">
+            <h5>💭 What I Wish I Knew One Year Ago</h5>
+            <p>${item.wishIKnew}</p>
+          </div>
+        ` : ''}
+
+        ${item.advice ? `
+          <div class="reader-block lesson-block">
+            <h5>💡 Advice & Lessons Learned</h5>
+            <p>${item.advice}</p>
+          </div>
+        ` : ''}
+      `;
+
+      lucide.createIcons();
+      switchPage('experience');
+    }
+
+    function renderQuestions() {
+      const container = document.getElementById('questions-list-container');
+      container.innerHTML = questionsData.map(q => `
+        <div class="exp-post-card" style="cursor:default;">
+          <div style="font-size:0.8rem; color:var(--navy-600); margin-bottom:0.4rem;">Asked by <strong>${q.askedBy}</strong></div>
+          <h3 class="post-card-title" style="margin-bottom:1rem;">${q.title}</h3>
+
+          <div style="background:var(--bg-light); border-radius:8px; padding:1rem;">
+            <div style="font-size:0.78rem; font-weight:700; uppercase; color:var(--lavender-600); margin-bottom:0.4rem;">Answers from Older Students (${q.answers.length})</div>
+            ${q.answers.map(a => `
+              <div style="font-size:0.92rem; color:var(--navy-800); margin-bottom:0.5rem;">
+                "${a.text}" — <strong>${a.author}</strong>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderWishes() {
+      const container = document.getElementById('wish-list-container');
+      container.innerHTML = experiencesData.filter(e => e.wishIKnew).map(item => `
+        <div class="exp-post-card" style="border-left:4px solid var(--light-blue-500);">
+          <div style="font-size:0.8weight:700; color:var(--light-blue-600); margin-bottom:0.3rem;">💭 I WISH I KNEW</div>
+          <h3 class="post-card-title" style="font-size:1.1rem;">"${item.wishIKnew}"</h3>
+          <div style="font-size:0.82rem; color:var(--navy-600); margin-top:0.75rem;">— Shared by <strong>${item.author}</strong> (${item.field})</div>
+        </div>
+      `).join('');
+    }
+
+    function setExperienceLevel(lvl) {
+      currentSelectedLevel = lvl;
+      document.querySelectorAll('.level-filter-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.querySelector(`.level-filter-btn[data-level="${lvl}"]`);
+      if (activeBtn) activeBtn.classList.add('active');
+      renderExperiences();
+    }
+
+    function setExperienceCategory(cat) {
+      currentSelectedCategory = cat;
+      renderExperiences();
+    }
+
+    function filterCategory(cat) {
+      currentSelectedCategory = cat;
+      switchPage('experiences');
+    }
+
+    function quickSearch(term) {
+      document.getElementById('home-search-input').value = term;
+      handleHomeSearch();
+    }
+
+    function handleHomeSearch() {
+      switchPage('experiences');
+    }
+
+    const safetyModal = document.getElementById('safety-modal');
+    document.getElementById('btn-open-safety-modal').addEventListener('click', () => safetyModal.classList.add('active'));
+    document.getElementById('btn-close-safety-modal').addEventListener('click', () => safetyModal.classList.remove('active'));
+
+    document.getElementById('share-experience-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const newPost = {
+        id: Date.now(),
+        title: document.getElementById('post-title').value,
+        level: document.getElementById('post-level').value,
+        category: document.getElementById('post-category').value,
+        experience: document.getElementById('post-exp-text').value,
+        wishIKnew: document.getElementById('post-wish-text').value,
+        advice: document.getElementById('post-advice-text').value,
+        author: document.getElementById('post-author-alias').value,
+        field: document.getElementById('post-author-field').value,
+        likes: 1
+      };
+
+      experiencesData.unshift(newPost);
+      document.getElementById('share-experience-form').reset();
+      alert('Thank you! Your experience has been submitted and reviewed for community safety.');
+      switchPage('experiences');
+    });
+
+    lucide.createIcons();
+  </script>
+</body>
+</html>
